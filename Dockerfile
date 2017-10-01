@@ -18,7 +18,7 @@ RUN tar xvfz s3cmd-2.0.0.tar.gz
 RUN cd s3cmd-2.0.0 && python setup.py install
 RUN rm s3cmd-2.0.0.tar.gz
 
-ADD ./s3cfg /root/.s3cfg
+ADD ./.s3cfg /root/.s3cfg
 
 # backup script
 

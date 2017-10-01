@@ -4,20 +4,26 @@
 
 S3_BUCKET="${S3_BUCKET-no}"
 S3_PATH="${S3_PATH-no}"
-AWS_ACCESS_KEY_ID="${AWS_ACCESS_KEY_ID-no}"
-AWS_SECRET_ACCESS_KEY="${AWS_SECRET_ACCESS_KEY-no}"
+S3_ACCESS_KEY="${S3_ACCESS_KEY-no}"
+S3_SECRET_KEY="${S3_SECRET_KEY-no}"
 RESTORE_FROM="${RESTORE_FROM-no}"
+S3_ENCRYPTION_KEY="${S3_ENCRYPTION_KEY-no}"
 
 # determine whether we should register backup jobs
 
 [ "${S3_BUCKET}" != 'no' ] && \
 [ "${S3_PATH}" != 'no' ] && \
-[ "${AWS_ACCESS_KEY_ID}" != 'no' ] && \
-[ "${AWS_SECRET_ACCESS_KEY}" != 'no' ]
+[ "${S3_ACCESS_KEY}" != 'no' ] && \
+[ "${S3_SECRET_KEY}" != 'no' ] &&
+[ "${S3_ENCRYPTION_KEY}" != 'no' ]
 
 BACKUP=$?
 
 if [ "${BACKUP}" -eq 0 ]; then
+
+    echo "access_key=${S3_ACCESS_KEY}" >> /root/.s3cfg
+    echo "secret_key=${S3_SECRET_KEY}" >> /root/.s3cfg
+    echo "gpg_passphrase=${S3_ENCRYPTION_KEY}" >> /root/.s3cfg
 
     echo "Installing cron jobs for backup"
 
