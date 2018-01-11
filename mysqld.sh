@@ -1,5 +1,7 @@
 #!/bin/bash
 
+. /usr/local/bin/env_secrets_expand.sh
+
 # default env variables
 
 S3_BUCKET="${S3_BUCKET-no}"

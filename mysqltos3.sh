@@ -1,5 +1,9 @@
 #!/bin/sh
 
+. /usr/local/bin/env_secrets_expand.sh
+
+MYSQL_ROOT_PASSWORD=$(`cat /run/secrets/mysql_root_password`)
+
 # Adapted from https://github.com/woxxy/MySQL-backup-to-Amazon-S3
 
 TIMESTAMP=$(date +"%Y-%m-%d_%H-%M")
