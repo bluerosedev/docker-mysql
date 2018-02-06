@@ -17,7 +17,7 @@ env_secret_debug()
 env_secret_expand() {
     var="$1"
     eval val=\$$var
-    if secret_name=$(expr match "$val" "{{DOCKER-SECRET:\([^}]\+\)}}$"); then
+    if secret_name=$(expr match "$val" "DOCKER-SECRET:\([^}]\+\)$"); then
         secret="${ENV_SECRETS_DIR}/${secret_name}"
         env_secret_debug "Secret file for $var: $secret"
         if [ -f "$secret" ]; then
