@@ -2,7 +2,7 @@
 
 . /usr/local/bin/env_secrets_expand.sh
 
-MYSQL_ROOT_PASSWORD=$(`cat /run/secrets/mysql_root_password`)
+MYSQL_ROOT_PASSWORD=$(`cat ${MYSQL_ROOT_PASSWORD_FILE}`)
 
 # Adapted from https://github.com/woxxy/MySQL-backup-to-Amazon-S3
 
