@@ -26,9 +26,11 @@ if [ "${S3_CONFIGURED}" -eq 0 ]; then
 
     echo "Configuring s3cmd"
 
-    echo "access_key=${S3_ACCESS_KEY}" >> /root/.s3cfg
-    echo "secret_key=${S3_SECRET_KEY}" >> /root/.s3cfg
-    echo "gpg_passphrase=${S3_ENCRYPTION_KEY}" >> /root/.s3cfg
+    CONFIG_FILE="/root/.s3cfg"
+
+    sed -i "/access_key = .*/c\access_key = ${S3_ACCESS_KEY}" ${CONFIG_FILE}
+    sed -i "/secret_key = .*/c\secret_key = ${S3_SECRET_KEY}" ${CONFIG_FILE}
+    sed -i "/gpg_passphrase = .*/c\gpg_passphrase = ${S3_ENCRYPTION_KEY}" ${CONFIG_FILE}
 
     # optional parameters
 
