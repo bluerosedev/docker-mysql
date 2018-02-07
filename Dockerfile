@@ -1,5 +1,7 @@
 FROM mysql
 
+ENV S3CMD_VERSION 1.6.1
+
 RUN apt-get update && \
     apt-get install -y \
         cron \
@@ -8,9 +10,9 @@ RUN apt-get update && \
         supervisor \
         vim \
         wget && \
-    wget http://downloads.sourceforge.net/project/s3tools/s3cmd/2.0.0/s3cmd-2.0.0.tar.gz && \
-    tar xvfz s3cmd-2.0.0.tar.gz && \
-    cd s3cmd-2.0.0 && \
+    wget https://github.com/s3tools/s3cmd/releases/download/v${S3CMD_VERSION}/s3cmd-${S3CMD_VERSION}.tar.gz && \
+    tar xzf s3cmd-${S3CMD_VERSION}.tar.gz && \
+    cd s3cmd-${S3CMD_VERSION} && \
     python setup.py install
 
 ADD ./.s3cfg /root/.s3cfg
