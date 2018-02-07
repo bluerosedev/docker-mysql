@@ -30,6 +30,11 @@ if [ "${S3_CONFIGURED}" -eq 0 ]; then
     echo "secret_key=${S3_SECRET_KEY}" >> /root/.s3cfg
     echo "gpg_passphrase=${S3_ENCRYPTION_KEY}" >> /root/.s3cfg
 
+    # optional parameters
+
+    [[ $S3_HOST_BASE ]] && sed -i "/host_base = .*/c\host_base = ${S3_HOST_BASE}" ${CONFIG_FILE}
+    [[ $S3_HOST_BUCKET ]] && sed -i "/host_bucket = .*/c\host_bucket = ${S3_HOST_BUCKET}" ${CONFIG_FILE}
+
     if [ "${BACKUP}" == "yes" ]; then
 
         echo "Configuring backup"
