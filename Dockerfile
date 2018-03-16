@@ -1,6 +1,7 @@
 FROM mysql:5.6
 
 ENV S3CMD_VERSION 1.6.1
+ENV DOCKERIZE_VERSION v0.6.0
 
 RUN apt-get update && \
     apt-get install -y \
@@ -10,12 +11,15 @@ RUN apt-get update && \
         supervisor \
         vim \
         wget && \
+    wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
+    rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && \
     wget https://github.com/s3tools/s3cmd/releases/download/v${S3CMD_VERSION}/s3cmd-${S3CMD_VERSION}.tar.gz && \
     tar xzf s3cmd-${S3CMD_VERSION}.tar.gz && \
     cd s3cmd-${S3CMD_VERSION} && \
     python setup.py install
 
-ADD ./.s3cfg /root/.s3cfg
+ADD ./.s3cfg.tmpl /root/.s3cfg.tmpl
 
 # backup script
 

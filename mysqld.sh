@@ -6,36 +6,25 @@
 
 S3_BUCKET="${S3_BUCKET-no}"
 S3_PATH="${S3_PATH-no}"
-S3_ACCESS_KEY="${S3_ACCESS_KEY-no}"
-S3_SECRET_KEY="${S3_SECRET_KEY-no}"
+AWS_ACCESS_KEY="${AWS_ACCESS_KEY-no}"
+AWS_SECRET_KEY="${AWS_SECRET_KEY-no}"
 RESTORE_FROM="${RESTORE_FROM-no}"
+AWS_REGION="${AWS_REGION-no}"
 BACKUP="${BACKUP-no}"
-S3_ENCRYPTION_KEY="${S3_ENCRYPTION_KEY-no}"
 
 # determine whether we should register backup jobs
 
 [ "${S3_BUCKET}" != 'no' ] && \
 [ "${S3_PATH}" != 'no' ] && \
-[ "${S3_ACCESS_KEY}" != 'no' ] && \
-[ "${S3_SECRET_KEY}" != 'no' ] &&
-[ "${S3_ENCRYPTION_KEY}" != 'no' ]
+[ "${AWS_ACCESS_KEY}" != 'no' ] && \
+[ "${AWS_SECRET_KEY}" != 'no' ] && \
+[ "${AWS_REGION}" != 'no' ] && \
 
 S3_CONFIGURED=$?
 
 if [ "${S3_CONFIGURED}" -eq 0 ]; then
 
-    echo "Configuring s3cmd"
-
-    CONFIG_FILE="/root/.s3cfg"
-
-    sed -i "/access_key = .*/c\access_key = ${S3_ACCESS_KEY}" ${CONFIG_FILE}
-    sed -i "/secret_key = .*/c\secret_key = ${S3_SECRET_KEY}" ${CONFIG_FILE}
-    sed -i "/gpg_passphrase = .*/c\gpg_passphrase = ${S3_ENCRYPTION_KEY}" ${CONFIG_FILE}
-
-    # optional parameters
-
-    [[ $S3_HOST_BASE ]] && sed -i "/host_base = .*/c\host_base = ${S3_HOST_BASE}" ${CONFIG_FILE}
-    [[ $S3_HOST_BUCKET ]] && sed -i "/host_bucket = .*/c\host_bucket = ${S3_HOST_BUCKET}" ${CONFIG_FILE}
+    dockerize --template /root/.s3cfg.tmpl:/root/.s3cfg echo "Configuring s3cmd"
 
     if [ "${BACKUP}" == "yes" ]; then
 
