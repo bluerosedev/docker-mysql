@@ -52,12 +52,7 @@ if [ "${S3_CONFIGURED}" -eq 0 ]; then
 
         echo "Attempting to restore from ${RESTORE_FROM} backup"
 
-        echo "testing"
-        echo "${RESTORE_FROM}"
-        echo "${LATEST_BACKUP+x}"
-        echo "$(ls /docker-entrypoint-initdb.d/ | wc -l)"
-
-        if [ ${RESTORE_FROM} != 'no' ] && [ ${LATEST_BACKUP+x} != 'x' ] && [ $(ls /docker-entrypoint-initdb.d/ | wc -l) -eq 0 ]; then
+        if [ ${RESTORE_FROM} != 'no' ] && [ ${LATEST_BACKUP+x} != '' ] && [ $(ls /docker-entrypoint-initdb.d/ | wc -l) -eq 0 ]; then
 
             echo "Backup found: ${LATEST_BACKUP}"
 
