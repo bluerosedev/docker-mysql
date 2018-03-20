@@ -26,6 +26,7 @@ ADD ./.s3cfg.tmpl /root/.s3cfg.tmpl
 ADD ./mysqltos3.sh /usr/local/bin/mysqltos3
 ADD ./mysqld.sh /usr/local/bin/mysqld.sh
 ADD ./env_secrets_expand.sh /usr/local/bin/env_secrets_expand.sh
+ADD ./shutdown-hook.sh /usr/local/bin/shutdown-hook.sh
 
 RUN rm /entrypoint.sh
 ADD ./entrypoint.sh /entrypoint.sh
