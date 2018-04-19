@@ -26,7 +26,7 @@ if [ "${S3_CONFIGURED}" -eq 0 ]; then
 
     dockerize --template /root/.s3cfg.tmpl:/root/.s3cfg echo "Configuring s3cmd"
 
-    if [ "${BACKUP}" == "yes" ]; then
+    if [ "${BACKUP}" != "no" ]; then
 
         echo "Configuring backup"
 
